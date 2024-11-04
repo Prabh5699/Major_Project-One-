@@ -1,0 +1,106 @@
+body {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.container {
+  flex: 1;
+}
+
+/* navbar */
+.navbar {
+  height: 5rem;
+  background-color: white;
+}
+.fa-compass {
+  color: #fe424d;
+  font-size: 2rem;
+}
+.nav-link {
+  color: #222222;
+}
+
+/* footer */
+
+.f-info-links a {
+  color: #222222;
+  text-decoration: none;
+}
+.f-info-links a:hover {
+  text-decoration: underline;
+}
+.f-info {
+  display: flex;
+  height: 5rem;
+  background-color: #ebebeb;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: space-evenly;
+  text-align: center;
+}
+.f-info-links,
+.f-info-socials {
+  width: 100%;
+  font-size: 1.2rem;
+  vertical-align: middle;
+}
+
+.f-info-socials i {
+  margin-right: 0 1rem;
+}
+
+/* card */
+.card {
+  border: none !important;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.card-img-top {
+  border-radius: 1rem !important;
+  width: 100% !important;
+  object-fit: cover !important;
+}
+.card-body {
+  padding: 0 !important;
+}
+.card-text p {
+  font-weight: 700 !important;
+}
+
+.card-img-overlay {
+  opacity: 0;
+}
+.card-img-overlay :hover {
+  opacity: 1;
+  background-color: white;
+}
+.mybttn {
+  background-color: #fe424d !important;
+  border: none !important;
+}
+.edit:hover {
+  color: #fe424d; /* change text color to match your brand */
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* add a subtle shadow effect */
+  cursor: pointer; /* change cursor to pointer */
+  transition: all 0.2s ease-in-out; /* add a smooth transition */
+}
+.img-fluid {
+  border-radius: 1rem !important;
+  width: 50% !important;
+  height: 30% !important;
+  object-fit: cover !important;
+}
+.show-img {
+  border-radius: 1rem !important;
+  width: 40% !important;
+  object-fit: cover !important;
+}
+
+.listing-image {
+  max-width: 50rem !important; /* Allows the image to scale responsively */
+  height: auto !important; /* Maintains the aspect ratio */
+  width: 30rem !important; /* Set a fixed width */
+  margin-top: 10px !important; /* Adds some space above the image */
+}

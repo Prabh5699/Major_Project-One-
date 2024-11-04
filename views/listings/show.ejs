@@ -1,0 +1,56 @@
+<% layout("layouts/boilerplate"); %>
+    <br><br>
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h3>Edit Listing</h3>
+            <form method="POST" action="/listings/<%= listing._id %>?_method=PUT">
+
+                <div class="image-section">
+                    <img src="<%= listing.image.url %>" alt="Listing Image" class="listing-image">
+                </div>
+                <div>
+                    <label for="title" class="form-label">Title:</label>
+                    <input id="title" name="Listing[title]" value="<%= listing.title %>" type="text"
+                        class="form-control"> 
+                </div>
+                <div>
+                    <label for="description" class="form-label">Description:</label>
+                    <input id="description" name="Listing[description]" value="<%= listing.description %>"
+                        placeholder="Description" type="text" class="form-control">
+                </div>
+                <div>
+                    <label for="image" class="form-label">Image:</label>
+
+                    <input id="image" name="Listing[image][url]" value="<%= listing.image.url %>" placeholder="URL"
+                        type="text" class="form-control">
+                </div>
+                <div>
+                    <label for="price" class="form-label">Price:</label>
+                    <input id="price" name="Listing[price]" value="<%= listing.price %>" placeholder="Price"
+                        type="number" class="form-control">
+                </div>
+                <div>
+                    <label for="location" class="form-label">Location:</label>
+                    <input id="location" name="Listing[location]" value="<%= listing.location %>" placeholder="Location"
+                        type="text" class="form-control">
+                </div>
+                <div>
+                    <label for="country" class="form-label">Country:</label>
+                    <input id="country" name="Listing[country]" value="<%= listing.country %>" placeholder="Country"
+                        type="text" class="form-control">
+                </div>
+<br>
+                <div>
+                    <button type="submit" class="btn btn-primary mybttn">Edit</button>
+                </div>
+            </form>
+            <br>
+            <div>
+                <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
+                    <button type="submit" class="btn btn-danger">Delete Listing</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    </div>
