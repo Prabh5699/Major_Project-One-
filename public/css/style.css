@@ -3,6 +3,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  margin: 0;
 }
 .container {
   flex: 1;
@@ -38,6 +39,8 @@ body {
   flex-wrap: wrap;
   align-items: space-evenly;
   text-align: center;
+  position: relative;
+  bottom: 0;
 }
 .f-info-links,
 .f-info-socials {
@@ -51,7 +54,7 @@ body {
 }
 
 /* card */
-.card {
+.listing-card {
   border: none !important;
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -88,7 +91,7 @@ body {
 }
 .img-fluid {
   border-radius: 1rem !important;
-  width: 50% !important;
+  width: 40% !important;
   height: 30% !important;
   object-fit: cover !important;
 }
@@ -100,7 +103,11 @@ body {
 
 .listing-image {
   max-width: 50rem !important; /* Allows the image to scale responsively */
-  height: auto !important; /* Maintains the aspect ratio */
+  height: 20rem !important; /* Maintains the aspect ratio */
   width: 30rem !important; /* Set a fixed width */
   margin-top: 10px !important; /* Adds some space above the image */
+}
+#map {
+  height: 300px;
+  width: 90vh;
 }

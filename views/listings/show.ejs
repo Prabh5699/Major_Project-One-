@@ -1,56 +1,154 @@
 <% layout("layouts/boilerplate"); %>
+
+    <script>
+        const mapToken = "<%= process.env.MAP_TOKEN %>";
+        const listing = <%- JSON.stringify(listing) %>;
+
+    </script>
+
     <br><br>
     <div class="row">
         <div class="col-md-8 offset-md-2">
-            <h3>Edit Listing</h3>
+            <h3>
+                <%= listing.title %>
+            </h3>
             <form method="POST" action="/listings/<%= listing._id %>?_method=PUT">
 
-                <div class="image-section">
+                <div class="image-section listing-card">
                     <img src="<%= listing.image.url %>" alt="Listing Image" class="listing-image">
                 </div>
+
                 <div>
-                    <label for="title" class="form-label">Title:</label>
-                    <input id="title" name="Listing[title]" value="<%= listing.title %>" type="text"
-                        class="form-control"> 
+                    <label for="owner" class="form-label">Owned By:</label>
+                    <input id="owner" name="Listing[owner]" value="<%= listing.owner.username %>" type="text"
+                        class="form-control" readonly>
                 </div>
+
                 <div>
                     <label for="description" class="form-label">Description:</label>
                     <input id="description" name="Listing[description]" value="<%= listing.description %>"
                         placeholder="Description" type="text" class="form-control">
                 </div>
+
                 <div>
                     <label for="image" class="form-label">Image:</label>
-
                     <input id="image" name="Listing[image][url]" value="<%= listing.image.url %>" placeholder="URL"
                         type="text" class="form-control">
                 </div>
+
                 <div>
                     <label for="price" class="form-label">Price:</label>
                     <input id="price" name="Listing[price]" value="<%= listing.price %>" placeholder="Price"
                         type="number" class="form-control">
                 </div>
+
                 <div>
                     <label for="location" class="form-label">Location:</label>
                     <input id="location" name="Listing[location]" value="<%= listing.location %>" placeholder="Location"
                         type="text" class="form-control">
                 </div>
+
                 <div>
                     <label for="country" class="form-label">Country:</label>
                     <input id="country" name="Listing[country]" value="<%= listing.country %>" placeholder="Country"
                         type="text" class="form-control">
                 </div>
-<br>
-                <div>
-                    <button type="submit" class="btn btn-primary mybttn">Edit</button>
-                </div>
-            </form>
-            <br>
-            <div>
-                <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
-                    <button type="submit" class="btn btn-danger">Delete Listing</button>
-                </form>
 
+                <br>
+                <% if (currentUser && listing.owner._id.toString()===currentUser._id.toString()) { %>
+                    <div>
+                        <div>
+                            <a href="/listings/<%= listing._id %>/edit" class="btn btn-primary mybttn">Edit</a>
+                        </div>
+                        <br>
+                        <div>
+                            <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
+                                <button type="submit" class="btn btn-dark">Delete Listing</button>
+                            </form>
+                        </div>
+                    </div>
+                    <% } %>
+
+
+            </form>
+
+            <hr>
+
+
+            <div class="row g-4"> <!-- Add gap between columns for breathing room -->
+                <h4><b>All Reviews</b></h4>
+                <% for (let review of listing.reviews) { %>
+                    <div class="col-md-4 offset-md-0"> <!-- Fit 3 reviews in a row -->
+                        <div class="card mb-4 p-3 shadow-sm" style="border-radius: 8px;">
+                            <!-- More padding and shadow for breathability -->
+                            <div class="card-body">
+                                <h5 class="card-title">@<%= review.author.username %>
+                                </h5>
+                                <p class="starability-result" data-rating="<%= review.rating %>"></p>
+                                <p class="card-text">
+                                    <%= review.comment %>
+                                </p>
+
+                            </div>
+                            <% if (currentUser && review.author._id.equals(currentUser._id)) { %>
+                                <!-- Only show delete button for review author -->
+                                <form class="mb-3"
+                                    action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+                                    method="POST">
+                                    <button type="submit" class="btn btn-dark btn-sm">Delete Review</button>
+                                </form>
+                                <% } %>
+                        </div>
+                    </div>
+                    <% } %>
             </div>
+
+
+
+            <% if(currentUser) { %>
+                <!-- Display 'Add Review' form only if currentUser exists -->
+                <div class="col-md-8 offset-ml-2">
+                    <h4>Leave a review</h4>
+                    <form action="/listings/<%= listing._id %>/reviews" method="POST" class="needs-validation"
+                        novalidate>
+                        <!-- <div class="mb-3 mt-3">
+                            <label for="rating" class="form-label">Rating</label>
+                            <input type="range" name="rating" id="rating" min="1" max="5" value="3" class="form-range">
+                        </div> -->
+                        <fieldset class="starability-growRotate">
+                            <legend>Rating</legend>
+                            <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked
+                                aria-label="No rating." />
+                            <input type="radio" id="first-rate1" name="rating" value="1" />
+                            <label for="first-rate1" title="Terrible">1 star</label>
+                            <input type="radio" id="first-rate2" name="rating" value="2" />
+                            <label for="first-rate2" title="Not good">2 stars</label>
+                            <input type="radio" id="first-rate3" name="rating" value="3" />
+                            <label for="first-rate3" title="Average">3 stars</label>
+                            <input type="radio" id="first-rate4" name="rating" value="4" />
+                            <label for="first-rate4" title="Very good">4 stars</label>
+                            <input type="radio" id="first-rate5" name="rating" value="5" />
+                            <label for="first-rate5" title="Amazing">5 stars</label>
+                        </fieldset>
+                        <div>
+                            <label for="comment" class="form-label">Comment</label>
+                            <textarea name="comment" id="comment" cols="30" rows="5" class="form-control"
+                                required></textarea>
+                            <div class="invalid-feedback">Please provide a comment.</div>
+                        </div>
+                        &nbsp;
+                        <div>
+                            <button class="btn btn-outline-dark">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <% } %>
         </div>
+        <br>
+        <div class="col-md-8 offset-md-2 mt-3">
+            <h3>Where you'll be</h3>
+            <div id="map"></div>
+        </div>
+        
     </div>
-    </div>
+    <script src="/js/map.js"></script>

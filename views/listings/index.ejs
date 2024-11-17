@@ -1,12 +1,111 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
 
+    <style>
+        #filters {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
 
-    <h3>All Listings</h3>
-    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1">
+        .filter {
+            text-align: center;
+
+            margin-right: 1rem;
+            margin-top: 2rem;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+
+        .filter:hover {
+            opacity: 1;
+        }
+
+        .filter p {
+            font-size: 0.8rem;
+        }
+        .tax-info{
+            display : none;
+        }
+        .tax-toggle{
+            border: 1px solid black;
+            border-radius: 0.5rem;
+            height: 3.25rem;
+            padding:  1rem;
+            margin-left: 2rem;
+            display: flex;
+            align-items: center;
+            
+        }
+    </style>
+
+
+    <div id="filters">
+        <div class="filter">
+            <div> <i class="fa-solid fa-fire"></i></div>
+            <p>Trending</p>
+        </div>
+        <div class="filter">
+            <div> <i class="fa-solid fa-bed"></i></div>
+            <p>Rooms</p>
+        </div>
+        <div class="filter">
+            <div> <i class="fa-solid fa-mountain-city"></i></div>
+            <p>Iconic cities</p>
+        </div>
+        <div class="filter">
+            <div> <i class="fa-solid fa-mountain"></i></div>
+            <p>Mountains</p>
+        </div>
+        <div class="filter">
+            <div> <i class="fa-solid fa-campground"></i></div>
+            <p>Outdoor Activities</p>
+        </div>
+        <div class="filter">
+            <div> <i class="fa-solid fa-umbrella-beach"></i></div>
+            <p>Beaches</p>
+        </div>
+        <div class="filter">
+            <div> <i class="fa-solid fa-sun"></i></div>
+            <p>Hotels</p>
+        </div>
+        <div class="filter">
+            <div> <i class="fa-solid fa-utensils"></i></div>
+            <p>Restaurants</p>
+        </div>
+        <div class="filter">
+            <div> <i class="fa-solid fa-building"></i></div>
+            <p>Hostels</p>
+        </div>
+        <div class="filter">
+            <div> <i class="fa-solid fa-campground"></i></div>
+            <p>Adventure</p>
+        </div>
+        <div class="filter">
+            <div> <i class="fa-solid fa-moon"></i></div>
+            <p>Night</p>
+        </div>
+        <div class="filter">
+            <div> <i class="fa-solid fa-mobile"></i></div>
+            <p>Clubs</p>
+        </div>
+        <div class="filter">
+            <div> <i class="fa-solid fa-igloo"></i></div>
+            <p>Domes</p>
+        </div>
+
+        <div class="tax-toggle">
+            <div class="form-check-reverse form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                <label class="form-check-label" for="flexSwitchCheckDefault">Display Total after taxes</label>
+
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 mt-3">
 
         <% for (let listing of allListings) { %>
-            <div class="card col">
+            <div class="card col listing-card">
 
                 <% if (listing.image && listing.image.url) { %>
 
@@ -22,6 +121,7 @@
                                         <%= listing.title %>
                                     </strong> <br>
                                     &#8377 <%= listing.price.toLocaleString("en-IN") %> /night
+                                        <i class="tax-info"> &nbsp;+18% GST</i>
                                         <strong> &nbsp; &#x2605; <%= listing.location %></strong>
                                 </p>
                                 <a href="/listings/<%= listing._id %>" class="btn btn-primary mybttn">View Details</a>
@@ -29,3 +129,17 @@
             </div>
             <% } %>
     </div>
+
+    <script>
+        let taxSwitch = document.getElementById("flexSwitchCheckDefault");
+        taxSwitch.addEventListener("click", () => {
+            let taxInfo = document.getElementsByClassName("tax-info");
+            for (let i = 0; i < taxInfo.length; i++) {
+                if (taxSwitch.checked) {
+                    taxInfo[i].style.display = "inline";
+                } else {
+                    taxInfo[i].style.display = "none";
+                }
+            }
+        });
+    </script>
